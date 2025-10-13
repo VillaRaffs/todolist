@@ -1,14 +1,3 @@
-class Task{
-    constructor(description){
-        this.description = description;
-        this.completed = false;
-    }
-
-    toggleComplete(){
-        this.completed = !this.completed;
-    }
-}
-
 //class TaskManager{
     //constructor(){
         //this.tasks = [];
@@ -55,57 +44,60 @@ class Task{
   //  }
 //}
 
-class TaskManager {
+class Task{
+    constructor(description){
+        this.description = description;
+        this.completed = false;
+    }
+
+    toggleComplete(){
+        this.completed = !this.completed;
+    }
+}
+
+class TaskManager{
     constructor(){
-        this.tasklist = document.getElementById('task-list');
-        this.loadtasks();
+        this.tasks = [];
     }
 
-    async loadtasks(){
-        const response = await fetch('/tasks');
-        const tasks = await response.json();
-        this.render(tasks);
+    addTask(description){
+        const task = new Task(description);
+        this.tasks.push(task);
+        this.displayTask();
     }
 
-    async addTask(description){
-        await fetch('/tasks', {
-            method: 'POST',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({description})
-        });
-        this.loadtasks();
+    removeTask(index){
+        this.tasks.splice(index, 1);
+        this.displayTask();
     }
 
-    async removeTask (id){
-        await fetch(`/tasks/${id}`, {method: 'DELETE'});
-        this.loadtasks();
+    toggleTaskCompletion(index){
+        this.tasks[index].toggleComplete();
+        this.displayTask();
     }
 
-     async togggleTask (id){
-        await fetch(`/tasks/${id}/toggle`, {method: 'PATCH'});
-     }
+    displayTask(){
+        const taskList = document.getElementById('task-list');
+        taskList.innerHTML = '';
 
-     render(tasks){
-        this.tasklist.innerHTML = '';
+        this.tasks.forEach((task, index) => {
+            const taskItem = document.createElement('li');
+            taskItem.className = task.completed ? 'completed' : '';
+            //continuei daqui
+            const taskDescription = document.createElement('span');
+            taskDescription.textContent = taskDescription;
+            taskDescription.addEventListener('click', () => this.toggleTaskCompletion(index));
 
-        tasks.forEach(task => {
-            const li = document. createElement('li');
-            li.className = task.completed ? 'completed' :'';
-        
-           const span =document .createElement('button');
-           span.textContent = task.description;
-           span.addEventListener('click', () => this.togggleTask(task.id));
+            const removeButton = document.createElement('button');
+            removeButton.className = 'remove-btn'
+            removeButton.textContent = 'Remove'
+            removeButton.addEventListener('click', () => this.removeTask(index));
 
-           const removeBtn = document.createElement('button');
-           removeBtn.className = 'remove-btn';
-           removeBtn.textContent = 'Remove';
-           removeBtn.addEventListener('click', () => this.removeTask (task.id));
-
-           li.appendChild(span);
-           li.appendChild(removeBtn);
-           this.tasklist.appendChild(li);
+            taskItem.appendChild(taskDescription);
+            taskItem.appendChild(removeButton);
+            taskList.appendChild(taskItem); // essa é taskList
         })
-     }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('task-input')
 
     addTaskBtn.addEventListener('click', () => {
-        const taskDescription = taskInput.ariaValueMax.trim();
-        li.className = task.completed ? 'completed' : '';
+        const taskDescription =  taskInput.value.trim();
+        
     })
 })

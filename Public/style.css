@@ -1,15 +1,15 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Georgia,Times, Arial;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: black;
     margin: 0;
 }
 
 .container{
-    background-color: white;
+    background-color: pink;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -35,7 +35,7 @@ input{
 button{
     padding: 10px;
     border: none;
-    background: #28a745;
+    background: rgb(221, 96, 133);
     color: white;
     cursor: pointer;
     border-radius: 4px;
@@ -43,7 +43,7 @@ button{
 }
 
 button:hover{
-    background: #1a672b;
+    background: #f03976;
 }
 
 ul{
@@ -61,7 +61,7 @@ li{
 
 li.completed{
     text-decoration: line-through;
-    color: #777;
+    color: #000000;
 }
 
 .remove-btn{
